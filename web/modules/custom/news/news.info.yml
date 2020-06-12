@@ -1,5 +1,7 @@
-name: 'news'
+name: news
 type: module
 description: 'News module'
 core: 8.x
-package: 'Custom'
+package: Custom
+dependencies:
+  - menu_ui
