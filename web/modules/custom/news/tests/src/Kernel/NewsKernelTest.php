@@ -86,8 +86,9 @@ class NewsKernelTest extends GraphQLContentTestBase
     $this->assertEqual(count($results), 2);
   }
 
-  public function testNodeQueryGraphQL() {
-     $nodes = [
+  public function testNodeQueryGraphQL()
+  {
+    $nodes = [
       [
         'title' => 'Minha notícia fabulosa 1',
         'field_my_field' => 'My field',
@@ -133,7 +134,24 @@ class NewsKernelTest extends GraphQLContentTestBase
       ]
     ]);
   }
-  
+
+  public function testCustomGraphQLQuery()
+  {
+    $metadata = $this->defaultCacheMetaData();
+    $metadata->addCacheContexts(['user.node_grants:view']);
+    $metadata->addCacheTags(['node:1', 'node:2', 'node:3', 'node_list']);
+
+    $this->assertResults($this->getQueryFromFile('customNodeQuery.gql'), [], [
+      'customNodeQuery' => [
+        'entities' => [
+          ['entityId' => 1],
+          ['entityId' => 2],
+          ['entityId' => 3]
+        ]
+      ]
+    ], $metadata);
+  }
+
   /**
    * Returns a result of a GraphQL query.
    *
