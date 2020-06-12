@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains news.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function news_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the news module.
+    case 'help.page.news':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('News module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
