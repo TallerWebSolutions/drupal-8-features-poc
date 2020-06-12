@@ -12,10 +12,10 @@ use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
  */
 class NewsListTest extends EntityKernelTestBase {
 
-  public static $modules = ['node', 'news'];
+  public static $modules = ['node', 'news', 'menu_ui'];
 
   /**
-   * @var 
+   * @var \Drupal\node\NodeStorage $nodeStorage
    */
   private $nodeStorage;
 
@@ -41,7 +41,36 @@ class NewsListTest extends EntityKernelTestBase {
     ]);
 
     $node = reset($nodes);
-
-    $this->assertEqual($node->get('field_my_field')->getValue(), 'My field');
+    $this->assertEqual($node->get('field_my_field')->getString(), 'My field');
   }
+
+  public function testNodeQuery() {
+
+    $nodes = [
+      [
+        'title' => 'Minha notícia fabulosa 1',
+        'field_my_field' => 'My field',
+        'type' => 'foo'
+      ],
+      [
+        'title' => 'Minha notícia fabulosa 2',
+        'field_my_field' => 'My field',
+        'type' => 'foo'
+      ],
+      [
+        'title' => 'Minha notícia fabulosa 3',
+        'field_my_field' => 'My field 2',
+        'type' => 'foo'
+      ]
+    ];
+
+    foreach($nodes as $node){
+      $this->nodeStorage->create($node)->save();
+    }
+
+    $query = $this->nodeStorage->getQuery();
+    $results = $query->condition('field_my_field', 'My Field')->execute();
+
+    $this->assertEqual(count($results), 2);
+  } 
 }
