@@ -137,17 +137,36 @@ class NewsKernelTest extends GraphQLContentTestBase
 
   public function testCustomGraphQLQuery()
   {
+    $nodes = [
+      [
+        'title' => 'Minha notícia fabulosa 1',
+        'field_my_field' => 'My field',
+        'type' => 'news'
+      ],
+      [
+        'title' => 'Minha notícia fabulosa 2',
+        'field_my_field' => 'My field',
+        'type' => 'news'
+      ],
+      [
+        'title' => 'Minha notícia fabulosa 3',
+        'field_my_field' => 'My field 2',
+        'type' => 'news'
+      ]
+    ];
+
+    foreach ($nodes as $node) {
+      $this->nodeStorage->create($node)->save();
+    }
+
     $metadata = $this->defaultCacheMetaData();
-    $metadata->addCacheContexts(['user.node_grants:view']);
-    $metadata->addCacheTags(['node:1', 'node:2', 'node:3', 'node_list']);
+    $metadata->addCacheTags(['node:1', 'node:2', 'node:3', 'custom_node']);
 
     $this->assertResults($this->getQueryFromFile('customNodeQuery.gql'), [], [
       'customNodeQuery' => [
-        'entities' => [
           ['entityId' => 1],
           ['entityId' => 2],
           ['entityId' => 3]
-        ]
       ]
     ], $metadata);
   }

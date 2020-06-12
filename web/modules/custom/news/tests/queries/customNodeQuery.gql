@@ -1,5 +1,5 @@
 query CustomNews {
-  customNodeQuery(filter: { conditions: [{ field: "type", value: "news" }] }) {
+  customNodeQuery {
     entityId
   }
 }

@@ -49,6 +49,12 @@ class CustomNodeQuery extends FieldPluginBase implements ContainerFactoryPluginI
     );
   }
 
+  public function getCacheDependencies($result, $parent, $args, $context, $info) {
+    $metadata = parent::getCacheDependencies($result, $parent, $args, $context, $info);
+    $metadata[0]->addCacheTags(['custom_node']);
+    return $metadata;
+  }
+
   public function resolveValues($value, $args, $context, $info)
   {
     $nodeStorage = $this->entityTypeManager->getStorage('node');
