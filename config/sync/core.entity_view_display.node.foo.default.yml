@@ -1,0 +1,39 @@
+uuid: a38b2a66-172f-4ac0-be59-fdb6e73185ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.foo.body
+    - field.field.node.foo.field_my_field
+    - node.type.foo
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: fU-SqQCqyKaHZ3LIAO8gbNKZE70wsAofzOH6JjEMAws
+id: node.foo.default
+targetEntityType: node
+bundle: foo
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_my_field:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

@@ -1,0 +1,34 @@
+uuid: 55d407e1-7bf1-4033-919b-d46ee32a1c5a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.foo.body
+    - field.field.node.foo.field_my_field
+    - node.type.foo
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: NVm-KypMYHXLVpPmbmOJUVaDcZ2dFGdL6GSpuZ_PqQA
+id: node.foo.teaser
+targetEntityType: node
+bundle: foo
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_my_field: true

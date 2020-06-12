@@ -1,0 +1,21 @@
+uuid: fff9141f-cc20-40e6-97be-53395569c602
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_my_field
+    - node.type.foo
+_core:
+  default_config_hash: XaZQ6ccmEqCh7S__8lRUHSGwOy4LhN84KHmYnCQx3NA
+id: node.foo.field_my_field
+field_name: field_my_field
+entity_type: node
+bundle: foo
+label: my_field
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -20,7 +20,8 @@
     "squizlabs/php_codesniffer": "*",
     "phpunit/phpunit": "6.*",
     "drupal/devel": "^2.1",
-    "mikey179/vfsstream": "^1.6"
+    "mikey179/vfsstream": "^1.6",
+    "drupal/config_devel": "^1.7"
   },
   "scripts": {
     "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
