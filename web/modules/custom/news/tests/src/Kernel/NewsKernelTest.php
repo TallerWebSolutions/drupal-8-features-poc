@@ -7,6 +7,8 @@ use GraphQL\Server\OperationParams;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\graphql_core\Kernel\GraphQLContentTestBase;
 use Drupal\Tests\graphql\Kernel\GraphQLTestBase;
+use Drupal\Tests\graphql\Traits\QueryFileTrait;
+use Drupal\Tests\graphql\Traits\QueryResultAssertionTrait;
 
 /**
  * Tests for news list.
@@ -15,6 +17,9 @@ use Drupal\Tests\graphql\Kernel\GraphQLTestBase;
  */
 class NewsKernelTest extends GraphQLContentTestBase
 {
+  use QueryFileTrait;
+  use QueryResultAssertionTrait;
+
 
   public static $modules = ['node', 'news', 'menu_ui', 'graphql', 'graphql_core'];
 
@@ -86,17 +91,17 @@ class NewsKernelTest extends GraphQLContentTestBase
       [
         'title' => 'Minha notícia fabulosa 1',
         'field_my_field' => 'My field',
-        'type' => 'foo'
+        'type' => 'news'
       ],
       [
         'title' => 'Minha notícia fabulosa 2',
         'field_my_field' => 'My field',
-        'type' => 'foo'
+        'type' => 'news'
       ],
       [
         'title' => 'Minha notícia fabulosa 3',
         'field_my_field' => 'My field 2',
-        'type' => 'foo'
+        'type' => 'news'
       ]
     ];
 
@@ -104,9 +109,29 @@ class NewsKernelTest extends GraphQLContentTestBase
       $this->nodeStorage->create($node)->save();
     }
 
-    $res = $this->executeQuery('nodeQuery.gql');
+    $metadata = $this->defaultCacheMetaData();
+    $metadata->addCacheContexts(['user.node_grants:view']);
+    $metadata->addCacheTags(['node:1', 'node:2', 'node:3', 'node_list']);
 
-    $this->assertEquals(count($res['data']), 3);
+    $this->assertResults($this->getQueryFromFile('nodeQuery.gql'), [], [
+      'nodeQuery' => [
+        'entities' => [
+          ['entityId' => 1],
+          ['entityId' => 2],
+          ['entityId' => 3]
+        ]
+      ]
+    ], $metadata);
+
+    $this->assertResultData($this->executeQuery('nodeQuery.gql'), [
+      'nodeQuery' => [
+        'entities' => [
+          ['entityId' => 1],
+          ['entityId' => 2],
+          ['entityId' => 3]
+        ]
+      ]
+    ]);
   }
   
   /**
@@ -122,10 +147,11 @@ class NewsKernelTest extends GraphQLContentTestBase
    */
   protected function executeQuery($query, array $variables = [])
   {
+
     return $this->graphQlProcessor()->processQuery(
       $this->getDefaultSchema(),
       OperationParams::create([
-        'query' => $query,
+        'query' => $this->getQueryFromFile($query),
         'variables' => $variables,
       ])
     );
