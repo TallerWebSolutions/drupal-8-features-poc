@@ -1,0 +1,7 @@
+query News {
+  nodeQuery(filter: { conditions: [{ field: "type", value: "news" }] }) {
+    entities {
+      entityId
+    }
+  }
+}
