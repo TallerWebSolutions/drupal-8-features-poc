@@ -11,7 +11,13 @@
     "drupal/core": "8.*",
     "drush/drush": "^9.7",
     "cweagans/composer-patches": "^1.6",
-    "drupal/graphql": "^3.0"
+    "drupal/graphql": "^3.0",
+    "drupal/config_distro": "1.0-alpha3",
+    "drupal/config_merge": "1.0-rc3",
+    "drupal/config_normalizer": "1.0-alpha6",
+    "drupal/config_provider": "2.0-rc2",
+    "drupal/config_snapshot": "1.0-rc2",
+    "drupal/config_sync": "2.0-beta5"
   },
   "require-dev": {
     "drupal/coder": "8.*",
